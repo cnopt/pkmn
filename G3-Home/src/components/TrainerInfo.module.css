@@ -1,0 +1,56 @@
+.card {
+  background: var(--color-surface, rgba(255 255 255 / 0.04));
+  border: 1px solid var(--color-border, #333355);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.gameIcon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text, #eee);
+}
+
+.game {
+  font-size: 0.85rem;
+  color: var(--color-muted, #999);
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stat dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted, #888);
+}
+
+.stat dd {
+  margin: 0;
+  font-size: 1rem;
+  font-family: monospace;
+  color: var(--color-text, #eee);
+}

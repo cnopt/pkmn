@@ -1,0 +1,57 @@
+G3-Home/public/sprites/
+G3-Home/public/sprites-raw/
+
+
+# --- Frontend (G3-Home) ---
+G3-Home/node_modules/
+G3-Home/dist/
+G3-Home/dist-ssr/
+*.local
+
+# --- Backend (.NET) ---
+backend-api/bin/
+backend-api/obj/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+**/secrets.json
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- IDE / editor ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sw?
+
+# --- Cursor (local agent state) ---
+.cursor/
+
+# --- Pokemon save files (user uploads; do not commit) ---
+*.sav
+*.dsv
+*.main
+*.dat

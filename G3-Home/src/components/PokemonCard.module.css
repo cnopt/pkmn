@@ -1,0 +1,168 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--color-surface, rgba(255 255 255 / 0.04));
+  border: 1px solid var(--color-border, #333355);
+  border-radius: 0.75rem;
+  font-size: 0.82rem;
+  transition: box-shadow 0.15s;
+}
+
+.card:hover {
+  box-shadow: 0 0 0 2px var(--color-accent, #646cff55);
+}
+
+.empty {
+  min-height: 6rem;
+  opacity: 0.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyLabel {
+  font-size: 0.75rem;
+  color: var(--color-muted, #666);
+}
+
+.shiny {
+  border-color: #ffd700aa;
+}
+
+.shinyBadge,
+.eggBadge {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.eggBadge {
+  right: 1.6rem;
+}
+
+.sprite {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  align-self: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.species {
+  font-weight: 700;
+  color: var(--color-text, #eee);
+  font-size: 0.9rem;
+}
+
+.nickname {
+  color: var(--color-muted, #aaa);
+  font-style: italic;
+  font-size: 0.78rem;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.level {
+  font-weight: 600;
+  color: var(--color-accent, #646cff);
+}
+
+.gender {
+  font-weight: 700;
+}
+
+.nature {
+  color: var(--color-muted, #aaa);
+}
+
+.heldItem {
+  color: var(--color-muted, #bbb);
+  font-size: 0.78rem;
+}
+
+.moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.move {
+  background: rgba(255 255 255 / 0.07);
+  border-radius: 0.3rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  color: var(--color-text, #ddd);
+  white-space: nowrap;
+}
+
+.statsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.25rem;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: 2.2rem 2rem 1fr;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--color-muted, #888);
+  text-align: right;
+}
+
+.statValue {
+  font-size: 0.75rem;
+  text-align: right;
+  font-family: monospace;
+  color: var(--color-text, #ddd);
+}
+
+.statBarTrack {
+  height: 5px;
+  background: rgba(255 255 255 / 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.statBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.ivSummary {
+  font-size: 0.72rem;
+  color: var(--color-muted, #888);
+  text-align: right;
+}
+
+.perfect {
+  color: #ffd700;
+  font-weight: 700;
+}
