@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import styles from './SaveUpload.module.css'
 
-const ACCEPTED_EXTENSIONS = ['.sav', '.bin', '.dat', '.dsv', '.gci', '.raw', '.main']
+const ACCEPTED_EXTENSIONS = ['.sav', '.bin', '.srm', '.dat', '.dsv', '.gci', '.raw', '.main']
 
 export default function SaveUpload({ onUpload, loading }) {
   const inputRef = useRef(null)

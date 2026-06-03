@@ -1,73 +1,6 @@
-import { useState } from 'react'
+import SpriteImage from './SpriteImage'
+import { PokemonStatsBlock } from './PokemonStats'
 import styles from './PokemonCard.module.css'
-
-const STAT_ABBR = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe']
-const STAT_KEYS = ['hp', 'attack', 'defense', 'spAttack', 'spDefense', 'speed']
-
-const SPRITE_FALLBACK_ORDER = ['showdown', 'home', 'firered', 'icons']
-
-function spriteUrl(set, species, isShiny) {
-  const s = isShiny ? '/shiny' : ''
-  switch (set) {
-    case 'showdown': return `/sprites/showdown${s}/${species}.gif`
-    case 'home':     return `/sprites/home${s}/${species}.png`
-    case 'firered':  return `/sprites/firered${s}/${species}.png`
-    case 'icons':    return `/sprites/icons/${species}.png`
-    default:         return null
-  }
-}
-
-function buildFallbacks(species, isShiny, spriteSet) {
-  if (spriteSet && spriteSet !== 'auto') {
-    // Pin to the selected set, then fall back through the rest
-    const rest = SPRITE_FALLBACK_ORDER.filter((s) => s !== spriteSet)
-    return [spriteSet, ...rest].map((s) => spriteUrl(s, species, isShiny))
-  }
-  return SPRITE_FALLBACK_ORDER.map((s) => spriteUrl(s, species, isShiny))
-}
-
-function SpriteImage({ species, isShiny, name, spriteSet }) {
-  const fallbacks = buildFallbacks(species, isShiny, spriteSet)
-  const [idx, setIdx] = useState(0)
-  const [failed, setFailed] = useState(false)
-
-  if (failed) return null
-
-  return (
-    <img
-      src={fallbacks[idx]}
-      alt={name}
-      className={styles.sprite}
-      loading="lazy"
-      onError={() => {
-        if (idx + 1 < fallbacks.length) {
-          setIdx(idx + 1)
-        } else {
-          setFailed(true)
-        }
-      }}
-    />
-  )
-}
-
-function StatBar({ label, value, max = 255 }) {
-  const pct = Math.round((value / max) * 100)
-  const color =
-    value >= 120 ? '#4caf50' :
-    value >= 80  ? '#8bc34a' :
-    value >= 50  ? '#ffc107' :
-    value >= 30  ? '#ff9800' : '#f44336'
-
-  return (
-    <div className={styles.statRow}>
-      <span className={styles.statLabel}>{label}</span>
-      <span className={styles.statValue}>{value}</span>
-      <div className={styles.statBarTrack}>
-        <div className={styles.statBarFill} style={{ width: `${pct}%`, background: color }} />
-      </div>
-    </div>
-  )
-}
 
 export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
   if (pokemon.isEmpty) {
@@ -77,10 +10,6 @@ export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
       </div>
     )
   }
-
-  const ivTotal = pokemon.ivs
-    ? Object.values(pokemon.ivs).reduce((s, v) => s + v, 0)
-    : null
 
   return (
     <div className={`${styles.card} ${pokemon.isShiny ? styles.shiny : ''}`}>
@@ -92,6 +21,7 @@ export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
         isShiny={pokemon.isShiny}
         name={pokemon.speciesName}
         spriteSet={spriteSet}
+        className={styles.sprite}
       />
 
       <div className={styles.info}>
@@ -125,18 +55,7 @@ export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
         </div>
       )}
 
-      <div className={styles.statsBlock}>
-        {STAT_ABBR.map((label, i) => (
-          <StatBar key={label} label={label} value={pokemon[STAT_KEYS[i]] ?? 0} />
-        ))}
-      </div>
-
-      {ivTotal !== null && (
-        <div className={styles.ivSummary}>
-          IVs: {ivTotal} / 186
-          {ivTotal === 186 && <span className={styles.perfect}> ★</span>}
-        </div>
-      )}
+      <PokemonStatsBlock pokemon={pokemon} />
     </div>
   )
 }

@@ -1,45 +1,67 @@
-:root {
-  --color-bg:      #0f0f14;
-  --color-surface: rgba(255 255 255 / 0.04);
-  --color-border:  #2a2a40;
-  --color-text:    #e8e8f0;
-  --color-muted:   #8888aa;
-  --color-accent:  #646cff;
-
-  --sans:  system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono:  ui-monospace, Consolas, monospace;
-
-  font: 16px/1.6 var(--sans);
-  color-scheme: dark;
-  color: var(--color-text);
-  background: var(--color-bg);
-  -webkit-font-smoothing: antialiased;
+@font-face {
+  font-family: home;
+  src: url('../src/assets/nintendo_udsgr_std_003.ttf');
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-bg:      #f7f7fb;
-    --color-surface: rgba(0 0 0 / 0.03);
-    --color-border:  #dddde8;
-    --color-text:    #111122;
-    --color-muted:   #555570;
-    --color-accent:  #4f46e5;
-    color-scheme: light;
-  }
+:root {
+  --color-bg-top:     #e3fad0;
+  --color-bg-bottom:  #95e6c6;
+  --color-header-bar: linear-gradient(90deg, #95e6c6 0%, #d1f7a2 100%);
+  --color-surface:    rgba(255 255 255 / 0.72);
+  --color-border:     #a8d8c0;
+  --color-text:       #2a4538;
+  --color-muted:      #5a8570;
+  --color-accent:     #f08030;
+
+  --sans: home, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/1.6 var(--sans);
+  color-scheme: light;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: var(--color-bg);
+  height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #e3fad0 0%,
+    #ccf4ae 10%,
+    #c4f2aa 20%,
+    #bcf0ae 30%,
+    #b7efb2 40%,
+    #b2edb7 50%,
+    #afebb8 60%,
+    #baeeca 70%,
+    #b7ecce 80%,
+    #b1ecd0 90%,
+    #9ae5c6 95%,
+    #95e6c6 100%
+  );
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(142 215 165 / 0.16), rgba(142 215 165 / 0.16)) 8% 22% / 42% 48%,
+    linear-gradient(rgba(130 205 155 / 0.13), rgba(130 205 155 / 0.13)) 58% 52% / 36% 40%;
+  background-repeat: no-repeat;
 }
 
 #root {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
-  min-height: 100svh;
+  height: 100svh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }

@@ -1,0 +1,31 @@
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.select {
+  background: var(--color-surface, rgba(255 255 255 / 0.05));
+  border: 1px solid var(--color-border, #333355);
+  border-radius: 0.4rem;
+  color: var(--color-text, #eee);
+  font-size: 0.82rem;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.select:focus,
+.select:hover {
+  border-color: var(--color-accent, #646cff);
+}

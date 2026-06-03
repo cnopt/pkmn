@@ -1,53 +1,111 @@
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100svh;
-  gap: 2rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+.headerStack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
   padding-bottom: 3rem;
 }
 
-/* ── Header ──────────────────────────────────────── */
-.header {
-  text-align: center;
-  padding: 2.5rem 1rem 0;
+/* ── Header bar (Pokémon HOME style) ─────────────── */
+.headerBar {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 3.25rem;
+  background: linear-gradient(90deg, #95e6c6 0%, #d1f7a2 100%);
+  box-shadow: 0 1px 0 rgba(120 180 150 / 0.35);
+}
+
+.titleTab {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.65rem 2.75rem 0.65rem 1.25rem;
+  background: #fff;
+  clip-path: polygon(0 0, calc(100% - 1.35rem) 0, 100% 100%, 0 100%);
 }
 
 .title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin: 0;
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  margin: 0 0 0.4rem;
-}
-
-.ball {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--color-accent);
-  font-size: 0.7em;
 }
 
-.subtitle {
-  color: var(--color-muted);
-  font-size: 1rem;
-  margin: 0 0 1rem;
+.headerMid {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerEnd {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0.45rem 1.25rem 0.45rem 2rem;
+  background: #fff;
+  clip-path: polygon(1.35rem 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .resetBtn {
-  margin-top: 0.5rem;
-  padding: 0.4rem 1rem;
-  border-radius: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 0.35rem;
   border: 1px solid var(--color-border);
-  background: transparent;
+  background: rgba(255 255 255 / 0.85);
   color: var(--color-muted);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .resetBtn:hover {
-  background: rgba(255 255 255 / 0.07);
+  background: #fff;
   color: var(--color-text);
+  border-color: var(--color-accent);
+}
+
+.subHeader {
+  width: 100%;
+  margin-top: -0.4rem;
+  padding: 0.9rem 1.5rem;
+  text-align: center;
+  background: rgba(255 255 255 / 0.32);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  border: none;
+  border-top: 1px solid rgba(255 255 255 / 0.58);
+  border-bottom: 1px solid rgba(255 255 255 / 0.35);
+  box-shadow:
+    0 2px 8px rgba(70 130 100 / 0.08),
+    inset 0 1px 0 rgba(255 255 255 / 0.65);
+}
+
+.subHeaderText {
+  margin: 0;
+  font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #2f5240;
 }
 
 /* ── Upload area ─────────────────────────────────── */
@@ -55,6 +113,7 @@
   max-width: 560px;
   width: 100%;
   margin: 0 auto;
+  padding: 1.75rem 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -63,9 +122,9 @@
 .error {
   padding: 0.75rem 1rem;
   border-radius: 0.6rem;
-  border: 1px solid #ff4444aa;
-  background: rgba(255 68 68 / 0.1);
-  color: #ff6666;
+  border: 1px solid #e06060;
+  background: rgba(255 100 100 / 0.12);
+  color: #b83030;
   font-size: 0.9rem;
   text-align: left;
 }
@@ -82,47 +141,14 @@
 .viewer {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.spriteLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  color: var(--color-muted);
-  white-space: nowrap;
-}
-
-.spriteSelect {
-  background: var(--color-surface, rgba(255 255 255 / 0.05));
-  border: 1px solid var(--color-border, #333355);
-  border-radius: 0.4rem;
-  color: var(--color-text, #eee);
-  font-size: 0.82rem;
-  padding: 0.3rem 0.6rem;
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
-.spriteSelect:focus,
-.spriteSelect:hover {
-  border-color: var(--color-accent, #646cff);
+  gap: 1.5rem;
+  padding: 1.75rem 1rem 2rem;
 }
 
 /* ── Footer ──────────────────────────────────────── */
 .footer {
   margin-top: auto;
-  padding: 1.5rem 0 0;
+  padding: 1.5rem 1rem 0;
   text-align: center;
   font-size: 0.78rem;
   color: var(--color-muted);

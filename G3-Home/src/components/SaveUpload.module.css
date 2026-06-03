@@ -19,8 +19,8 @@
 }
 
 .dragging {
-  border-color: var(--color-accent, #646cff);
-  background: rgba(100 108 255 / 0.08);
+  border-color: var(--color-accent, #f08030);
+  background: rgba(240 128 48 / 0.08);
 }
 
 .loading {
@@ -47,8 +47,8 @@
 .spinner {
   width: 2.5rem;
   height: 2.5rem;
-  border: 3px solid rgba(100 108 255 / 0.2);
-  border-top-color: var(--color-accent, #646cff);
+  border: 3px solid rgba(240 128 48 / 0.2);
+  border-top-color: var(--color-accent, #f08030);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
