@@ -4,6 +4,7 @@ import SaveUpload       from './components/SaveUpload'
 import TrainerInfo      from './components/TrainerInfo'
 import PartyGrid        from './components/PartyGrid'
 import BoxGrid          from './components/BoxGrid'
+import PokedexGrid      from './components/PokedexGrid'
 import styles           from './App.module.css'
 
 const SPRITE_SETS = [
@@ -25,7 +26,7 @@ export default function App() {
           <span className={styles.ball}>⬤</span> PKSave Reader
         </h1>
         <p className={styles.subtitle}>
-          Upload any Pokémon save file to inspect party and box data
+          Upload any Pokémon save file to inspect party, boxes, and Pokédex
         </p>
         {saveData && (
           <button className={styles.resetBtn} onClick={reset}>
@@ -68,8 +69,9 @@ export default function App() {
               </select>
             </label>
           </div>
-          <PartyGrid party={saveData.party} spriteSet={spriteSet} />
-          <BoxGrid   boxes={saveData.boxes} spriteSet={spriteSet} />
+          <PartyGrid   party={saveData.party}   spriteSet={spriteSet} />
+          <BoxGrid     boxes={saveData.boxes}   spriteSet={spriteSet} />
+          <PokedexGrid pokedex={saveData.pokedex} />
         </main>
       )}
 

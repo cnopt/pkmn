@@ -5,7 +5,8 @@ using PKHeX.Core;
 public record SaveDataDto(
     TrainerDto Trainer,
     PokemonDto[] Party,
-    BoxDto[] Boxes)
+    BoxDto[] Boxes,
+    PokedexDto Pokedex)
 {
     public static SaveDataDto From(SaveFile sav)
     {
@@ -18,10 +19,52 @@ public record SaveDataDto(
                              .ToArray(),
             Boxes: Enumerable.Range(0, sav.BoxCount)
                              .Select(b => BoxDto.From(sav, b, strings))
-                             .ToArray()
+                             .ToArray(),
+            Pokedex: PokedexDto.From(sav, strings)
         );
     }
 }
+
+public record PokedexDto(
+    int SeenCount,
+    int CaughtCount,
+    int TotalInGame,
+    PokedexEntryDto[] Entries)
+{
+    public static PokedexDto From(SaveFile sav, GameStrings strings)
+    {
+        var entries = new List<PokedexEntryDto>();
+        var seen = 0;
+        var caught = 0;
+        var total = 0;
+
+        for (ushort species = 1; species <= sav.MaxSpeciesID; species++)
+        {
+            if (!sav.Personal.IsSpeciesInGame(species))
+                continue;
+
+            total++;
+            var isSeen = sav.GetSeen(species);
+            var isCaught = sav.GetCaught(species);
+            if (isSeen) seen++;
+            if (isCaught) caught++;
+
+            entries.Add(new PokedexEntryDto(
+                Species:     species,
+                SpeciesName: StringTable.SafeGet(strings.specieslist, species),
+                Seen:        isSeen,
+                Caught:      isCaught));
+        }
+
+        return new PokedexDto(seen, caught, total, [.. entries]);
+    }
+}
+
+public record PokedexEntryDto(
+    int Species,
+    string SpeciesName,
+    bool Seen,
+    bool Caught);
 
 public record TrainerDto(
     string Name,
@@ -98,10 +141,10 @@ public record PokemonDto(
         }
 
         var genderIndex = pkm.Gender < GenderLabels.Length ? pkm.Gender : 2;
-        var natureName   = SafeGet(strings.natures,     (int)pkm.Nature);
-        var abilityName  = SafeGet(strings.abilitylist, pkm.Ability);
-        var speciesName  = SafeGet(strings.specieslist, pkm.Species);
-        var heldItemName = pkm.HeldItem > 0 ? SafeGet(strings.itemlist, pkm.HeldItem) : "";
+        var natureName   = StringTable.SafeGet(strings.natures,     (int)pkm.Nature);
+        var abilityName  = StringTable.SafeGet(strings.abilitylist, pkm.Ability);
+        var speciesName  = StringTable.SafeGet(strings.specieslist, pkm.Species);
+        var heldItemName = pkm.HeldItem > 0 ? StringTable.SafeGet(strings.itemlist, pkm.HeldItem) : "";
 
         return new PokemonDto(
             IsEmpty:      false,
@@ -140,15 +183,19 @@ public record PokemonDto(
         foreach (var id in moveIds)
         {
             if (id == 0) continue;
-            result.Add(new MoveDto(id, SafeGet(strings.movelist, id)));
+            result.Add(new MoveDto(id, StringTable.SafeGet(strings.movelist, id)));
         }
         return [.. result];
     }
 
-    private static string SafeGet(string[] arr, int index) =>
-        (uint)index < (uint)arr.Length ? arr[index] : "";
 }
 
 public record MoveDto(int Id, string Name);
 public record IvDto(int Hp, int Atk, int Def, int SpA, int SpD, int Spe);
 public record EvDto(int Hp, int Atk, int Def, int SpA, int SpD, int Spe);
+
+file static class StringTable
+{
+    public static string SafeGet(string[] arr, int index) =>
+        (uint)index < (uint)arr.Length ? arr[index] : "";
+}
