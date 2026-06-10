@@ -9,7 +9,7 @@ import './BoxGrid.css'
 // ── Sprite helpers ────────────────────────────────────────────────────────────
 
 function iconUrl(species) {
-  return `/sprites/icons/${species}.png`
+  return `/pksprite/regular/${species}.png`
 }
 
 function fireredUrl(species, isShiny) {
@@ -32,7 +32,7 @@ function BoxSlot({ pokemon, onEnter, onLeave }) {
       {!isEmpty && (
         <>
           <img
-            src={iconUrl(pokemon.species)}
+            src={iconUrl(pokemon.speciesName).toLowerCase()}
             alt={pokemon.speciesName}
             className="box-slot-icon"
             draggable={false}
@@ -148,6 +148,10 @@ export default function BoxGrid({ boxes }) {
   }
 
   return (
+    <>
+    <div className='pc-header'>
+      <p>Box Viewer</p>
+    </div>
     <div className="pc-screen">
       {/* Left: Pokémon Data panel */}
       <DataPanel pokemon={hoveredPokemon} />
@@ -201,5 +205,6 @@ export default function BoxGrid({ boxes }) {
         />
       </div>
     </div>
+    </>
   )
 }

@@ -12,6 +12,30 @@
   Right panel: 160×160 native → 480×480px displayed
 */
 
+.pc-header {
+  width: 720px;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin: 0;
+  padding: 0;
+  margin: 3rem auto 0rem auto;
+}
+
+.pc-header p {
+  margin: 0;
+  padding: 0;
+  padding-left: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.3rem;
+  font-size: 0.9em;
+  font-family: monospace;
+  opacity: 0.75;
+}
+
 .pc-screen {
   display: flex;
   flex-direction: row;
@@ -25,6 +49,8 @@
   /* Outer GBA-style border */
   outline: 2px solid #222;
   margin: 0 auto 2rem;
+  /* FRLG pointing-hand cursor (2×) — hotspot at fingertip (bottom-left) */
+  cursor: url('../assets/hand-cursor-2x.png') 8 38, auto;
 }
 
 /* ── Left: Pokémon Data panel ──────────────────────────────────────────────── */
@@ -57,13 +83,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 .data-panel-sprite {
-  max-width: 100%;
-  max-height: 100%;
+  /* Force sprite to fill the 192×192 blue preview area */
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /* Info text in the lower gray section of the data panel */
@@ -186,6 +214,8 @@
   width: 468px;          /* 156px × 3 */
   height: 348px;         /* 116px × 3 */
   flex-shrink: 0;
+  /* Row-1 sprites overflow above: must not clip */
+  overflow: visible;
 }
 
 .box-bg-img {
@@ -195,14 +225,17 @@
 }
 
 /*
-  Overlay grid inset from the pixel-art brown border of box1-bg.png:
-    All four sides: 5px native → 15px at 3×
-    Inner area: 438px wide (146×3), 318px tall (106×3)
-    Per slot: ~73px × ~64px
+  Overlay grid:
+    Left/right inset: 5px native → 15px at 3×
+    Top: raised 20px above the box top border so row-1 sprites spill out
+         above the brown frame (matches FRLG reference)
+    Bottom inset: 5px native → 15px at 3×
+    Grid height = 348 + 20 - 15 = 353px → row height ≈ 70.6px
+    Per slot: ~73px × ~71px  |  icons at 64×64 leave ~9px h-gap, ~7px v-gap
 */
 .box-grid-overlay {
   position: absolute;
-  top: 15px;
+  top: 0;
   left: 15px;
   right: 15px;
   bottom: 15px;
@@ -218,32 +251,25 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  cursor: pointer;
-}
-
-.box-slot:hover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.25);
-  pointer-events: none;
+  cursor: inherit;
+  overflow: visible;
 }
 
 .box-slot--empty {
-  cursor: default;
-}
-
-.box-slot--empty:hover::after {
-  display: none;
+  cursor: inherit;
 }
 
 .box-slot-icon {
-  /* Fill the slot, preserving aspect ratio — slot is ~73×64px */
-  width: 100%;
-  height: 100%;
+  flex-shrink: 0;
+  transform-origin: bottom center;
   object-fit: contain;
   image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  scale: 2.25;
+  transition: translate 0.1s ease-out;
+}
+
+.box-slot:not(.box-slot--empty):hover .box-slot-icon {
+  translate: 0 -10px;
 }
 
 .box-slot-shiny {

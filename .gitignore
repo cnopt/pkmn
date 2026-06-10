@@ -1,5 +1,6 @@
 G3-Home/public/sprites/
 G3-Home/public/sprites-raw/
+G3-Home/public/pksprite/
 
 
 # --- Frontend (G3-Home) ---
@@ -55,3 +56,4 @@ Desktop.ini
 *.dsv
 *.main
 *.dat
+G3-Home/src/assets/hand-cursor-2x.png
