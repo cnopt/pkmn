@@ -97,6 +97,7 @@ public record PokemonDto(
     int Species,
     string SpeciesName,
     string Nickname,
+    bool IsNicknamed,
     int Level,
     string Gender,
     bool IsShiny,
@@ -118,7 +119,11 @@ public record PokemonDto(
     IvDto IVs,
     EvDto EVs,
     string OtName,
-    int Form)
+    int Form,
+    int Type1,
+    int Type2,
+    string Type1Name,
+    string Type2Name)
 {
     private static readonly string[] GenderLabels = ["Male", "Female", "Genderless"];
 
@@ -128,7 +133,7 @@ public record PokemonDto(
         {
             return new PokemonDto(
                 IsEmpty: true,
-                Species: 0, SpeciesName: "", Nickname: "", Level: 0,
+                Species: 0, SpeciesName: "", Nickname: "", IsNicknamed: false, Level: 0,
                 Gender: "", IsShiny: false, IsEgg: false,
                 HeldItem: 0, HeldItemName: "",
                 Nature: 0, NatureName: "",
@@ -137,10 +142,14 @@ public record PokemonDto(
                 Moves: [],
                 IVs: new IvDto(0, 0, 0, 0, 0, 0),
                 EVs: new EvDto(0, 0, 0, 0, 0, 0),
-                OtName: "", Form: 0);
+                OtName: "", Form: 0,
+                Type1: 0, Type2: 0, Type1Name: "", Type2Name: "");
         }
 
         var genderIndex = pkm.Gender < GenderLabels.Length ? pkm.Gender : 2;
+        var personal    = pkm.PersonalInfo;
+        var type1       = (int)personal.Type1;
+        var type2       = (int)personal.Type2;
         var natureName   = StringTable.SafeGet(strings.natures,     (int)pkm.Nature);
         var abilityName  = StringTable.SafeGet(strings.abilitylist, pkm.Ability);
         var speciesName  = StringTable.SafeGet(strings.specieslist, pkm.Species);
@@ -151,6 +160,7 @@ public record PokemonDto(
             Species:      pkm.Species,
             SpeciesName:  speciesName,
             Nickname:     pkm.Nickname,
+            IsNicknamed:  pkm.IsNicknamed,
             Level:        pkm.CurrentLevel,
             Gender:       GenderLabels[genderIndex],
             IsShiny:      pkm.IsShiny,
@@ -172,7 +182,11 @@ public record PokemonDto(
             IVs:          new IvDto(pkm.IV_HP, pkm.IV_ATK, pkm.IV_DEF, pkm.IV_SPA, pkm.IV_SPD, pkm.IV_SPE),
             EVs:          new EvDto(pkm.EV_HP, pkm.EV_ATK, pkm.EV_DEF, pkm.EV_SPA, pkm.EV_SPD, pkm.EV_SPE),
             OtName:       pkm.OriginalTrainerName,
-            Form:         pkm.Form
+            Form:         pkm.Form,
+            Type1:        type1,
+            Type2:        type2,
+            Type1Name:    StringTable.SafeGet(strings.types, type1),
+            Type2Name:    StringTable.SafeGet(strings.types, type2)
         );
     }
 

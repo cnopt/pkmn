@@ -48,3 +48,67 @@ h1, h2, h3, h4 {
   font-weight: 700;
   color: var(--color-text);
 }
+
+/* ── Shared UI primitives ─────────────────────────── */
+.url-bar {
+  display: flex;
+  min-width: 0;
+}
+
+.url-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.5rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid var(--color-border);
+  border-right: none;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.url-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.accent-btn {
+  flex-shrink: 0;
+  padding: 0.45rem 1rem;
+  border-radius: 0.5rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: none;
+  background: rgba(100 108 255 / 0.15);
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.accent-btn:hover:not(:disabled) {
+  background: rgba(100 108 255 / 0.25);
+}
+
+.accent-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid rgba(100 108 255 / 0.2);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

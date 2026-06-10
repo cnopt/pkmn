@@ -1,10 +1,10 @@
-.section {
+.party-grid {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.heading {
+.party-grid .heading {
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -13,7 +13,7 @@
   letter-spacing: 0.08em;
 }
 
-.grid {
+.party-grid .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 0.75rem;

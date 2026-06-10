@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import styles from './PokemonCard.module.css'
+import { TypeBadges } from './TypeBadge'
+import './PokemonCard.css'
 
 const STAT_ABBR = ['HP', 'Atk', 'Def', 'SpA', 'SpD', 'Spe']
 const STAT_KEYS = ['hp', 'attack', 'defense', 'spAttack', 'spDefense', 'speed']
@@ -19,7 +20,6 @@ function spriteUrl(set, species, isShiny) {
 
 function buildFallbacks(species, isShiny, spriteSet) {
   if (spriteSet && spriteSet !== 'auto') {
-    // Pin to the selected set, then fall back through the rest
     const rest = SPRITE_FALLBACK_ORDER.filter((s) => s !== spriteSet)
     return [spriteSet, ...rest].map((s) => spriteUrl(s, species, isShiny))
   }
@@ -37,7 +37,7 @@ function SpriteImage({ species, isShiny, name, spriteSet }) {
     <img
       src={fallbacks[idx]}
       alt={name}
-      className={styles.sprite}
+      className="sprite"
       loading="lazy"
       onError={() => {
         if (idx + 1 < fallbacks.length) {
@@ -59,11 +59,11 @@ function StatBar({ label, value, max = 255 }) {
     value >= 30  ? '#ff9800' : '#f44336'
 
   return (
-    <div className={styles.statRow}>
-      <span className={styles.statLabel}>{label}</span>
-      <span className={styles.statValue}>{value}</span>
-      <div className={styles.statBarTrack}>
-        <div className={styles.statBarFill} style={{ width: `${pct}%`, background: color }} />
+    <div className="statRow">
+      <span className="statLabel">{label}</span>
+      <span className="statValue">{value}</span>
+      <div className="statBarTrack">
+        <div className="statBarFill" style={{ width: `${pct}%`, background: color }} />
       </div>
     </div>
   )
@@ -72,8 +72,8 @@ function StatBar({ label, value, max = 255 }) {
 export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
   if (pokemon.isEmpty) {
     return (
-      <div className={`${styles.card} ${styles.empty}`}>
-        <span className={styles.emptyLabel}>{source === 'party' ? `Slot ${slot + 1}` : ''}</span>
+      <div className="pokemon-card empty">
+        <span className="emptyLabel">{source === 'party' ? `Slot ${slot + 1}` : ''}</span>
       </div>
     )
   }
@@ -83,9 +83,16 @@ export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
     : null
 
   return (
-    <div className={`${styles.card} ${pokemon.isShiny ? styles.shiny : ''}`}>
-      {pokemon.isShiny && <span className={styles.shinyBadge} title="Shiny">✨</span>}
-      {pokemon.isEgg  && <span className={styles.eggBadge}   title="Egg">🥚</span>}
+    <div className={`pokemon-card ${pokemon.isShiny ? 'shiny' : ''}`}>
+      {pokemon.isShiny && <span className="shinyBadge" title="Shiny">✨</span>}
+      {pokemon.isEgg  && <span className="eggBadge"   title="Egg">🥚</span>}
+
+      <TypeBadges
+        type1={pokemon.type1}
+        type2={pokemon.type2}
+        type1Name={pokemon.type1Name}
+        type2Name={pokemon.type2Name}
+      />
 
       <SpriteImage
         species={pokemon.species}
@@ -94,47 +101,47 @@ export default function PokemonCard({ pokemon, slot, source, spriteSet }) {
         spriteSet={spriteSet}
       />
 
-      <div className={styles.info}>
-        <div className={styles.nameRow}>
-          <span className={styles.species}>{pokemon.speciesName}</span>
-          {pokemon.nickname && pokemon.nickname !== pokemon.speciesName && (
-            <span className={styles.nickname}>"{pokemon.nickname}"</span>
+      <div className="info">
+        <div className="nameRow">
+          <span className="species">{pokemon.speciesName}</span>
+          {pokemon.isNicknamed && (
+            <span className="nickname">"{pokemon.nickname}"</span>
           )}
         </div>
 
-        <div className={styles.metaRow}>
-          <span className={styles.level}>Lv. {pokemon.level}</span>
-          <span className={styles.gender} title={pokemon.gender}>
+        <div className="metaRow">
+          <span className="level">Lv. {pokemon.level}</span>
+          <span className="gender" title={pokemon.gender}>
             {pokemon.gender === 'Male' ? '♂' : pokemon.gender === 'Female' ? '♀' : ''}
           </span>
           {pokemon.natureName && (
-            <span className={styles.nature}>{pokemon.natureName}</span>
+            <span className="nature">{pokemon.natureName}</span>
           )}
         </div>
 
         {pokemon.heldItemName && (
-          <div className={styles.heldItem}>🎒 {pokemon.heldItemName}</div>
+          <div className="heldItem">🎒 {pokemon.heldItemName}</div>
         )}
       </div>
 
       {pokemon.moves?.length > 0 && (
-        <div className={styles.moves}>
+        <div className="moves">
           {pokemon.moves.map((m) => (
-            <span key={m.id} className={styles.move}>{m.name}</span>
+            <span key={m.id} className="move">{m.name}</span>
           ))}
         </div>
       )}
 
-      <div className={styles.statsBlock}>
+      <div className="statsBlock">
         {STAT_ABBR.map((label, i) => (
           <StatBar key={label} label={label} value={pokemon[STAT_KEYS[i]] ?? 0} />
         ))}
       </div>
 
       {ivTotal !== null && (
-        <div className={styles.ivSummary}>
+        <div className="ivSummary">
           IVs: {ivTotal} / 186
-          {ivTotal === 186 && <span className={styles.perfect}> ★</span>}
+          {ivTotal === 186 && <span className="perfect"> ★</span>}
         </div>
       )}
     </div>

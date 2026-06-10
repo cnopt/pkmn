@@ -1,0 +1,14 @@
+.typeBadge {
+  display: block;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  flex-shrink: 0;
+}
+
+.typeBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-items: flex-end;
+}

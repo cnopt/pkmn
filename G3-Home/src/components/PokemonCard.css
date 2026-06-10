@@ -1,4 +1,4 @@
-.card {
+.pokemon-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -11,11 +11,11 @@
   transition: box-shadow 0.15s;
 }
 
-.card:hover {
+.pokemon-card:hover {
   box-shadow: 0 0 0 2px var(--color-accent, #646cff55);
 }
 
-.empty {
+.pokemon-card.empty {
   min-height: 6rem;
   opacity: 0.25;
   display: flex;
@@ -23,91 +23,98 @@
   justify-content: center;
 }
 
-.emptyLabel {
+.pokemon-card .emptyLabel {
   font-size: 0.75rem;
   color: var(--color-muted, #666);
 }
 
-.shiny {
+.pokemon-card.shiny {
   border-color: #ffd700aa;
 }
 
-.shinyBadge,
-.eggBadge {
+.pokemon-card .shinyBadge,
+.pokemon-card .eggBadge {
   position: absolute;
   top: 0.4rem;
-  right: 0.4rem;
+  left: 0.4rem;
   font-size: 0.9rem;
 }
 
-.eggBadge {
-  right: 1.6rem;
+.pokemon-card .eggBadge {
+  left: 1.6rem;
 }
 
-.sprite {
+.pokemon-card .typeBadges {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  z-index: 1;
+}
+
+.pokemon-card .sprite {
   width: 64px;
   height: 64px;
   image-rendering: pixelated;
   align-self: center;
 }
 
-.info {
+.pokemon-card .info {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.nameRow {
+.pokemon-card .nameRow {
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
   flex-wrap: wrap;
 }
 
-.species {
+.pokemon-card .species {
   font-weight: 700;
   color: var(--color-text, #eee);
   font-size: 0.9rem;
 }
 
-.nickname {
+.pokemon-card .nickname {
   color: var(--color-muted, #aaa);
   font-style: italic;
   font-size: 0.78rem;
 }
 
-.metaRow {
+.pokemon-card .metaRow {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.level {
+.pokemon-card .level {
   font-weight: 600;
   color: var(--color-accent, #646cff);
 }
 
-.gender {
+.pokemon-card .gender {
   font-weight: 700;
 }
 
-.nature {
+.pokemon-card .nature {
   color: var(--color-muted, #aaa);
 }
 
-.heldItem {
+.pokemon-card .heldItem {
   color: var(--color-muted, #bbb);
   font-size: 0.78rem;
 }
 
-.moves {
+.pokemon-card .moves {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
 }
 
-.move {
+.pokemon-card .move {
   background: rgba(255 255 255 / 0.07);
   border-radius: 0.3rem;
   padding: 0.1rem 0.4rem;
@@ -116,53 +123,53 @@
   white-space: nowrap;
 }
 
-.statsBlock {
+.pokemon-card .statsBlock {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   margin-top: 0.25rem;
 }
 
-.statRow {
+.pokemon-card .statRow {
   display: grid;
   grid-template-columns: 2.2rem 2rem 1fr;
   align-items: center;
   gap: 0.3rem;
 }
 
-.statLabel {
+.pokemon-card .statLabel {
   font-size: 0.72rem;
   color: var(--color-muted, #888);
   text-align: right;
 }
 
-.statValue {
+.pokemon-card .statValue {
   font-size: 0.75rem;
   text-align: right;
   font-family: monospace;
   color: var(--color-text, #ddd);
 }
 
-.statBarTrack {
+.pokemon-card .statBarTrack {
   height: 5px;
   background: rgba(255 255 255 / 0.1);
   border-radius: 3px;
   overflow: hidden;
 }
 
-.statBarFill {
+.pokemon-card .statBarFill {
   height: 100%;
   border-radius: 3px;
   transition: width 0.4s ease;
 }
 
-.ivSummary {
+.pokemon-card .ivSummary {
   font-size: 0.72rem;
   color: var(--color-muted, #888);
   text-align: right;
 }
 
-.perfect {
+.pokemon-card .perfect {
   color: #ffd700;
   font-weight: 700;
 }
